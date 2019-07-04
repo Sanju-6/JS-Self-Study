@@ -6,21 +6,48 @@
   </head>
   <body>
     <script>
+      //function that plays the role of the computer
       function computerPlay() {
         var result = Math.floor((Math.random() * 9) +1)
 
         if(result >=1 && result<3)
         {
-          return "Rock"
+          return "rock"
         }
         else if (result>=3 && result<6) {
-          return "Paper"
+          return "paper"
         }
         else {
-          return "Scissors"
+          return "scissors"
         }
 
       }
+
+      var computerSelection = computerPlay();
+      var playerSelection = "rock"
+
+      //function to compute and declare the winner of a round
+      function playRound(computerSelection,playerSelection) {
+        playerSelection.toLowerCase()
+
+        if(computerSelection=="rock" && playerSelection =="paper")
+        {
+          return "You win! Paper beats rock"
+        }
+        else if (computerSelection == "paper" && playerSelection =="scissors") {
+          return "You win! Scissors beat paper";
+        }
+        else if (computerSelection =="scissors" && playerSelection =="rock") {
+          return "You win! Rock beats scissors";
+        }
+        else {
+          return "Sorry! You lost to the computer,bro."
+        }
+      }
+
+      console.log(playRound(playerSelection,computerSelection))
+
+
 
     </script>
 
