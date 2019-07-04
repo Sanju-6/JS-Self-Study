@@ -23,31 +23,61 @@
 
       }
 
-      var computerSelection = computerPlay();
-      var playerSelection = "rock"
+      //To keep score
+      var computer = 0
+      var player = 0
 
-      //function to compute and declare the winner of a round
-      function playRound(computerSelection,playerSelection) {
-        playerSelection.toLowerCase()
+      function game()
+      {
+        //function to compute and declare the winner of a round
+        function playRound(computerSelection,playerSelection) {
+          playerSelection.toLowerCase()
 
-        if(computerSelection=="rock" && playerSelection =="paper")
+          if(computerSelection=="rock" && playerSelection =="paper")
+          {
+            player++
+            return "You win! Paper beats rock" + "\t You : " +player +"\t Computer: " +computer
+          }
+          else if (computerSelection == "paper" && playerSelection =="scissors")
+          {
+            player++
+            return "You win! Scissors beat paper" + "\t You : " +player +"\t Computer: " +computer;
+          }
+          else if (computerSelection =="scissors" && playerSelection =="rock")
+          {
+            player++
+            return "You win! Rock beats scissors" + "\t You : " +player +"\t Computer: " +computer;
+          }
+          else
+          {
+            computer++
+            return "Sorry! You lost to the computer,bro." + "\t You : " +player +"\t Computer: " +computer
+          }
+        }
+
+        //To play the game five times
+        for(var i=0; i<5; i++)
         {
-          return "You win! Paper beats rock"
+          var computerSelection = computerPlay();
+          var playerSelection = prompt("rock, paper or scissors?");
+
+          console.log(playRound(computerSelection, playerSelection))
         }
-        else if (computerSelection == "paper" && playerSelection =="scissors") {
-          return "You win! Scissors beat paper";
+
+        //To decide the final winner
+        if(computer>player)
+        {
+          console.log("You lose!")
         }
-        else if (computerSelection =="scissors" && playerSelection =="rock") {
-          return "You win! Rock beats scissors";
+        else if (computer==player) {
+          console.log("It's a tie!")
         }
         else {
-          return "Sorry! You lost to the computer,bro."
+          console.log("You win!")
         }
       }
 
-      console.log(playRound(playerSelection,computerSelection))
-
-
+      game();
 
     </script>
 
