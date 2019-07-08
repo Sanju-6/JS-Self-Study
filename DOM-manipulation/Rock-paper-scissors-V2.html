@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Rock Paper Scissors</title>
+  </head>
+  <body>
+    <script>
+
+      //Display
+      var container = document.createElement('div');
+      container.setAttribute('style','border: 2px solid black; background:#f5d6c6; display: flex; flex-direction:row; justify-content:space-evenly;');
+
+      var rock = document.createElement('button');
+      var scissors = document.createElement('button');
+      var paper = document.createElement('button');
+      var results = document.createElement('div');
+      var mainHead = document.createElement('h2');
+      var playerScore = document.createElement('h4');
+      var computerScore = document.createElement('h4');
+      var roundUpdate = document.createElement('p');
+      var finalResult = document.createElement('h4');
+
+
+      rock.setAttribute('style','font-size:24px; background-color:#e8b5ce; border: 2px solid black;');
+      paper.setAttribute('style','font-size:24px; background-color:#e8b5ce; border-radius:4px;');
+      scissors.setAttribute('style','font-size:24px; background-color:#e8b5ce; border-radius:4px;');
+
+      rock.textContent = 'ROCK';
+      scissors.textContent = 'SCISSORS';
+      paper.textContent = 'PAPER';
+      mainHead.textContent = 'SCORE BOARD';
+
+      document.body.appendChild(container);
+
+      container.appendChild(rock);
+      container.appendChild(scissors);
+      container.appendChild(paper);
+
+      document.body.appendChild(results);
+
+      results.appendChild(mainHead);
+      results.appendChild(playerScore);
+      results.appendChild(computerScore);
+      results.appendChild(roundUpdate);
+      results.appendChild(finalResult);
+
+
+      //functioning of the playerSelection
+      rock.onclick = function(){
+        var playerSelection = 'rock';
+        var computerSelection = computerPlay();
+        roundUpdate.textContent = "Round Update:   " +playRound(computerSelection, playerSelection);
+        playerScore.textContent = "Player Score:   " +player;
+        computerScore.textContent = "Computer Score:   " +computer;
+        roundCheck();
+      }
+
+      paper.onclick = function(){
+        var playerSelection = 'paper';
+        var computerSelection = computerPlay();
+        roundUpdate.textContent = "Round Update:   " +playRound(computerSelection, playerSelection);
+        playerScore.textContent = "Player Score:   " +player;
+        computerScore.textContent = "Computer Score:   " +computer;
+        roundCheck();
+      }
+
+      scissors.onclick = function(){
+        var playerSelection = 'scissors';
+        var computerSelection = computerPlay();
+        roundUpdate.textContent = "Round Update:   " +playRound(computerSelection, playerSelection);
+        playerScore.textContent = "Player Score:   " +player;
+        computerScore.textContent = "Computer Score:   " +computer;
+        roundCheck();
+      }
+
+
+      //function that plays the role of the computer
+      function computerPlay() {
+        var result = Math.floor((Math.random() * 9) +1)
+
+        if(result >=1 && result<3)
+        {
+          return "rock"
+        }
+        else if (result>=3 && result<6) {
+          return "paper"
+        }
+        else {
+          return "scissors"
+        }
+
+      }
+      //To keep score
+      var computer = 0
+      var player = 0
+      var roundCount =0
+
+        //function to compute and declare the winner of a round
+        function playRound(computerSelection,playerSelection) {
+          playerSelection.toLowerCase()
+
+          console.log(playerSelection);
+          console.log(computerSelection);
+
+          if(computerSelection=="rock" && playerSelection =="paper")
+          {
+            player++
+            return "You win! Paper beats rock"
+          }
+          else if (computerSelection == "paper" && playerSelection =="scissors")
+          {
+            player++
+            return "You win! Scissors beat paper"
+          }
+          else if (computerSelection =="scissors" && playerSelection =="rock")
+          {
+            player++
+            return "You win! Rock beats scissors"
+          }
+          else if (computerSelection=="rock" && playerSelection =="rock") {
+            return "TIE!";
+          }
+          else if (computerSelection=="paper" && playerSelection =="paper") {
+            return "TIE!";
+          }
+          else if (computerSelection=="scissors" && playerSelection =="scissors") {
+            return "TIE!";
+          }
+          else
+          {
+            computer++
+            return "Sorry! You lost to the computer,bro.";
+          }
+        }
+
+
+        //To decide the final winner
+        function roundCheck()
+        {
+          if(player==5 || computer ==5)
+          {
+            if(computer>player)
+            {
+              finalResult.textContent = "Game over! You lose!"
+            }
+            else if (computer==player) {
+              finalResult.textContent = "Game over! It's a tie!"
+            }
+            else {
+              finalResult.textContent = "Game over! You win!"
+            }
+            player = 0;
+            computer =0;
+          }
+          else {
+            return;
+          }
+        }
+
+
+
+    </script>
+
+  </body>
+</html>
