@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Etch a sketch!</title>
+  </head>
+  <body>
+    <div class="outerDiv">
+      <h2>Sketch it up!</h2>
+      <div class="mainDiv">
+
+      </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+    var main = document.body.querySelector('.mainDiv');
+
+    main.setAttribute('style','display:flex; flex-wrap:wrap; justify-content:center;');
+
+    var i= 16*16;
+    //creates the grid
+      for(var j=0; j<i; j++)
+      {
+        var div = document.createElement('div');
+
+        div.setAttribute('style','background:white; border: 1px solid black; flex-basis:5.75%; color:white; '); //flex basis makes it the break properly into a grid
+
+        div.classList.add('gridElement');
+
+        div.textContent = j;
+
+        document.body.querySelector('.mainDiv').appendChild(div);
+      }
+
+    var grid = document.body.querySelector('.gridElement'); //trial at getting each div hovered over. but it doesn't yet. FIX IT
+
+    console.log(grid);
+
+    grid.onmouseover = function(e) { //function to change the div color but first need to figure out how to get each element hovered upon.
+      console.log(e);
+    };
+
+
+    </script>
+
+  </body>
+</html>
