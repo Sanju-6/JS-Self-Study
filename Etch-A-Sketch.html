@@ -16,31 +16,69 @@
     <script type="text/javascript">
 
     var main = document.body.querySelector('.mainDiv');
+    var outer = document.body.querySelector('.outerDiv');
+
+
+    var btn = document.createElement('button');// button to create a new grid
+
+    btn.textContent = 'New Grid';
+
+    outer.appendChild(btn);
+
+    btn.addEventListener('click', nxtGrid);
+
+
 
     main.setAttribute('style','display:flex; flex-wrap:wrap; justify-content:center;');
 
-    var i= 16*16;
-    //creates the grid
-      for(var j=0; j<i; j++)
+
+
+    function nxtGrid() //creates a new grid
+    {
+      var gridLength = window.prompt('what size do you want the grid?','16');
+      clearGrid();
+      createGrid(gridLength);
+    }
+
+    var gridLength =16;
+
+    function createGrid(gridLength) //function to display the grid on screen
+    {
+      var i= gridLength*gridLength;
+      //creates the grid
+        for(var j=0; j<i; j++)
+        {
+          const div = document.createElement('div');
+
+          div.setAttribute('style','background:white; border: 1px solid black; flex-basis:5.75%; color:white; '); //flex basis makes it the break properly into a grid
+
+          div.classList.add('gridElement');
+
+          div.textContent = j;
+
+          document.body.querySelector('.mainDiv').appendChild(div);
+
+          div.addEventListener('mouseenter',change);
+        }
+    }
+
+    function clearGrid() // clears the previous grid
+    {
+      var trial = document.body.querySelector('.mainDiv').children;
+      for(var k=0; k<trial.length; k++)
       {
-        var div = document.createElement('div');
-
-        div.setAttribute('style','background:white; border: 1px solid black; flex-basis:5.75%; color:white; '); //flex basis makes it the break properly into a grid
-
-        div.classList.add('gridElement');
-
-        div.textContent = j;
-
-        document.body.querySelector('.mainDiv').appendChild(div);
+        trial[k].style.display = "none";
       }
+    }
 
-    var grid = document.body.querySelector('.gridElement'); //trial at getting each div hovered over. but it doesn't yet. FIX IT
 
-    console.log(grid);
 
-    grid.onmouseover = function(e) { //function to change the div color but first need to figure out how to get each element hovered upon.
-      console.log(e);
+
+    function change(e) { //function to change the div color
+      e.target.style.background = "black";
     };
+
+    createGrid(gridLength); //initial grid
 
 
     </script>
