@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Array practice</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+    var arr = []
+    var num
+
+    //removes a single item form the array
+    function trial(arr, num)
+    {
+      for(var i=0; i<arr.length;i++)
+      {
+        if(arr[i] == num)
+        {
+          arr.splice(i,1);
+        }
+      }
+      return arr;
+    }
+
+    var num1
+    var num2
+
+    function mult(arr, num1, num2)
+    {
+      for(var i=arr.length; i>=0;i--)
+      {
+        if(arr[i] == num1 || arr[i]==num2)
+        {
+          arr.splice(i,1);
+        }
+      }
+      return arr;
+    }
+
+
+    </script>
+
+  </body>
+</html>
