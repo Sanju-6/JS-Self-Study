@@ -30,6 +30,8 @@ var decimal = document.createElement('button');
 
 var clearButton = document.createElement('button');
 
+var backSpaceButton = document.createElement('button');
+
 var num1 = 0;
 var num2 = 0;
 
@@ -64,6 +66,8 @@ decimal.setAttribute('style','height:100px; width: 100px; background-color:black
 
 clearButton.setAttribute('style','height:50px; width: 100px; background-color:black; color:white;');
 
+backSpaceButton.setAttribute('style','height:50px; width: 100px; background-color:black; color:white;');
+
 function numbers() {
   for(var i=9; i>-1; i--)
   {
@@ -88,6 +92,7 @@ mainContainer.appendChild(calculator);
 calculator.appendChild(display);
 calculator.appendChild(divider);
 divider.appendChild(clearButton);
+divider.appendChild(backSpaceButton);
 calculator.appendChild(buttons);
 buttons.appendChild(numberButtons);
 numbers();
@@ -106,12 +111,14 @@ division.textContent = "/";
 equals.textContent = "=";
 decimal.textContent = ".";
 clearButton.textContent = "Clear";
+backSpaceButton.textContent = "Backspace";
 
 addition.addEventListener('click', calcDisplay);
 multiplication.addEventListener('click', calcDisplay);
 subtraction.addEventListener('click', calcDisplay);
 division.addEventListener('click', calcDisplay);
 clearButton.addEventListener('click', clear);
+backSpaceButton.addEventListener('click', backSpace);
 
 function add(num1, num2) {
   return num1 + num2;
@@ -152,10 +159,15 @@ function operate(operator, num1, num2)
 var input = new Array();
 var contentDisplay = "";
 
+var strInput = "";
+
 var count = 0;
 var operator = "";
+var decimalCount = 0;
 
 var individualInput = "";
+
+var prevInput = "";
 
 var multiDigit = "";
 
@@ -163,56 +175,81 @@ var result = "hello";
 
 var resultShown = false;
 
+
 function calcDisplay(e) {
   if(resultShown)
   {
     clear();
     resultShown = false;
   }
-  individualInput = e.target.textContent;
-  if (!isNaN(individualInput) || individualInput == ".") {
-    multiDigit = multiDigit + individualInput;
-  }
-  else if(isNaN(individualInput))
-  {
-    input.push(multiDigit);
-    count = 1;
-  }
-  if(count == 1)
-  {
-    if(individualInput != "=")
-    {
-      input.push(individualInput);
-    }
-    count = 0;
-    multiDigit = "";
-  }
-  console.log(count);
-  console.log(individualInput);
-  console.log(multiDigit);
 
-  if(individualInput == "=")
+  individualInput = e.target.textContent;
+
+  if(individualInput != "=" && isNaN(individualInput) && individualInput != ".")
   {
-    if(isNaN(multiDigit))
+    strInput = strInput +" " +individualInput + " ";
+    decimalCount =0;
+  }
+  if(!isNaN(individualInput) || individualInput == ".")
+  {
+    if(individualInput == ".")
     {
-      displayContent.textContent = "Enter a number";
+      decimalCount++;
     }
-    else {
+    if(decimalCount > 1 && (!strInput.includes("+") || !strInput.includes("/") || !strInput.includes("-") || !strInput.includes("*")))
+    {
+      alert("There already exists a decimal in the equation. Please check the equation and try again.");
       return;
     }
-  }
+    else {
+      strInput = strInput + individualInput;
+    }
 
-  contentDisplay = contentDisplay + individualInput;
-  console.log(individualInput + isNaN(individualInput));
-  displayContent.textContent = contentDisplay;
-  console.log(input);
+  }
+  displayContent.textContent = strInput;
+
 }
 
 function showResult(e) {
+
+  if(strInput.charAt(strInput.length -1) == " ")
+  {
+    alert("Please check the inputted equation.");
+    return;
+  }
+  else if (!strInput.includes("+") && !strInput.includes("/") && !strInput.includes("-") && !strInput.includes("*")) {
+    result = strInput;
+    displayContent.textContent = result;
+    return;
+  }
+  if(strInput.charAt(0) == " ")
+  {
+    alert("Please check the inputted equation.");
+    return;
+  }
+
   calcDisplay(e);
+  strInput = strInput.trim();
+  input = strInput.split(" ");
+
   calcWork(input);
   displayContent.textContent = result;
   resultShown = true;
+}
+
+function backSpace(e) {
+
+  if(!isNaN(strInput.charAt(strInput.length -1)) && strInput.charAt(strInput.length -1) != " ")
+  {
+    strInput = strInput.slice(0,strInput.length -1);
+    displayContent.textContent = strInput;
+  }
+  else
+  {
+    strInput = strInput.slice(0, strInput.length -3);
+    displayContent.textContent = strInput;
+  }
+
 }
 
 function calcWork(str) {
@@ -291,7 +328,6 @@ function calcWork(str) {
       }
     }
   }
-  console.log(input);
   return result;
 }
 
@@ -303,18 +339,96 @@ function clear() {
 
   individualInput = "";
 
+  input.splice(0, input.length);
+
   contentDisplay = "";
   multiDigit = "";
 
+  strInput = "";
+
+  decimalCount =0;
+
   displayContent.textContent = contentDisplay;
-  console.log(input);
 }
 
 document.addEventListener('keyup', function(e){
-  //console.log(e.key +" " +e.keyCode);
-  if(e.key>=0 && e.key<=9 || (e.keyCode >= 187 && e.keyCode <= 191) || e.keyCode == 56  )
+  var collectionOfNumBtns = numberButtons.children;
+  if(e.key>=0 && e.key<=9 || (e.keyCode >= 187 && e.keyCode <= 191) || e.keyCode == 56 || e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 46)
   {
-    input = input + e.key;
-    displayContent.textContent = input;
+    if(e.keyCode == 189)
+    {
+      subtraction.click();
+    }
+    if(e.keyCode == 8)
+    {
+      backSpaceButton.click();
+    }
+    if(e.keyCode == 187)
+    {
+      addition.click();
+    }
+    if(e.keyCode == 191)
+    {
+      division.click();
+    }
+    if(e.keyCode == 56)
+    {
+      multiplication.click();
+    }
+    if(e.keyCode == 13)
+    {
+      equals.click();
+    }
+    if(e.keyCode == 46)
+    {
+      clearButton.click();
+    }
+    if(e.keyCode == 190)
+    {
+      decimal.click();
+    }
+
+
+    if(e.key == 9)
+    {
+      collectionOfNumBtns[0].click();
+    }
+    if(e.key == 8)
+    {
+      collectionOfNumBtns[1].click();
+    }
+    if(e.key == 7)
+    {
+      collectionOfNumBtns[2].click();
+    }
+    if(e.key == 6)
+    {
+      collectionOfNumBtns[3].click();
+    }
+    if(e.key == 5)
+    {
+      collectionOfNumBtns[4].click();
+    }
+    if(e.key == 4)
+    {
+      collectionOfNumBtns[5].click();
+    }
+    if(e.key == 3)
+    {
+      collectionOfNumBtns[6].click();
+    }
+    if(e.key == 2)
+    {
+      collectionOfNumBtns[7].click();
+    }
+    if(e.key == 1)
+    {
+      collectionOfNumBtns[8].click();
+    }
+    if(e.key == 0)
+    {
+      collectionOfNumBtns[9].click();
+    }
+
   }
 });
