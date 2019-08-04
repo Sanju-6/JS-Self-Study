@@ -235,6 +235,7 @@ function showResult(e) {
   calcWork(input);
   displayContent.textContent = result;
   resultShown = true;
+  result = "hello";
 }
 
 function backSpace(e) {
@@ -266,11 +267,21 @@ function calcWork(str) {
         str.splice(j-1, 3);
       }
       else if (str[j] == "/" && result != "hello") {
-        num1 = result;
-        num2 = str[j+1];
-        operator = str[j];
-        result = operate(operator,num1, num2);
-        str.splice(j, 2);
+        if(j == str.length - 1)
+        {
+          num1 = result;
+          num2 = str[j - 1];
+          operator = str[j];
+          result = operate(operator, num1, num2);
+          str.splice(j-1, 2);
+        }
+        else {
+          num1 = result;
+          num2 = str[j+1];
+          operator = str[j];
+          result = operate(operator,num1, num2);
+          str.splice(j, 2);
+        }
       }
     }
     for(var j = 0; j<str.length; j++)
@@ -284,11 +295,21 @@ function calcWork(str) {
         str.splice(j-1, 3);
       }
       else if (str[j] == "*" && result != "hello") {
-        num1 = result;
-        num2 = str[j+1];
-        operator = str[j];
-        result = operate(operator,num1, num2);
-        str.splice(j, 2);
+        if(j == str.length - 1)
+        {
+          num1 = result;
+          num2 = str[j - 1];
+          operator = str[j];
+          result = operate(operator, num1, num2);
+          str.splice(j-1, 2);
+        }
+        else {
+          num1 = result;
+          num2 = str[j+1];
+          operator = str[j];
+          result = operate(operator,num1, num2);
+          str.splice(j, 2);
+        }
       }
     }
     for(var j = 0; j<str.length; j++)
@@ -302,11 +323,21 @@ function calcWork(str) {
         str.splice(j-1, 3);
       }
       else if (str[j] == "+" && result != "hello") {
-        num1 = result;
-        num2 = str[j+1];
-        operator = str[j];
-        result = operate(operator,num1, num2);
-        str.splice(j, 2);
+        if(j == str.length - 1)
+        {
+          num1 = result;
+          num2 = str[j - 1];
+          operator = str[j];
+          result = operate(operator, num1, num2);
+          str.splice(j-1, 2);
+        }
+        else {
+          num1 = result;
+          num2 = str[j+1];
+          operator = str[j];
+          result = operate(operator,num1, num2);
+          str.splice(j, 2);
+        }
       }
     }
     for(var j = 0; j<str.length; j++)
@@ -320,11 +351,21 @@ function calcWork(str) {
         str.splice(j-1, 3);
       }
       else if (str[j] == "-" && result != "hello") {
-        num1 = result;
-        num2 = str[j+1];
-        operator = str[j];
-        result = operate(operator,num1, num2);
-        str.splice(j, 2);
+        if(j == str.length - 1)
+        {
+          num1 = result;
+          num2 = str[j - 1];
+          operator = str[j];
+          result = operate(operator, num1, num2);
+          str.splice(j-1, 2);
+        }
+        else {
+          num1 = result;
+          num2 = str[j+1];
+          operator = str[j];
+          result = operate(operator,num1, num2);
+          str.splice(j, 2);
+        }
       }
     }
   }
@@ -353,13 +394,13 @@ function clear() {
 
 document.addEventListener('keyup', function(e){
   var collectionOfNumBtns = numberButtons.children;
-  if(e.key>=0 && e.key<=9 || (e.keyCode >= 187 && e.keyCode <= 191) || e.keyCode == 56 || e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 46)
+  if(e.key>=0 && e.key<=9 || (e.keyCode >= 187 && e.keyCode <= 191) || e.keyCode == 56 || e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 46 && e.keyCode != 16)
   {
     if(e.keyCode == 189)
     {
       subtraction.click();
     }
-    if(e.keyCode == 8)
+    if(e.keyCode == 8 )
     {
       backSpaceButton.click();
     }
@@ -371,7 +412,7 @@ document.addEventListener('keyup', function(e){
     {
       division.click();
     }
-    if(e.keyCode == 56)
+    if(e.keyCode == 56 && e.key != 8)
     {
       multiplication.click();
     }
@@ -393,7 +434,7 @@ document.addEventListener('keyup', function(e){
     {
       collectionOfNumBtns[0].click();
     }
-    if(e.key == 8)
+    if(e.key == 8 && e.keyCode==56)
     {
       collectionOfNumBtns[1].click();
     }
@@ -429,6 +470,5 @@ document.addEventListener('keyup', function(e){
     {
       collectionOfNumBtns[9].click();
     }
-
   }
 });
